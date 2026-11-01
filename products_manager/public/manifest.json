@@ -1,0 +1,41 @@
+{
+  "name": "SOHOFIBRICO - Professional Inventory Management",
+  "short_name": "SOHOFIBRICO",
+  "description": "Professional inventory management system for hardware stores and DIY shops in Morocco",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/sohofibrico_icon.webp",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sohofibrico_logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/sohofibrico_icon.webp",
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View inventory dashboard",
+      "url": "/",
+      "icons": [{ "src": "/sohofibrico_icon.webp", "sizes": "32x32", "type": "image/svg+xml" }]
+    }
+  ]
+}
