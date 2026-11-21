@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Finances — "grand livre" (ledger book) theme.
+   Warm paper, ink, ledger green accent. Vermilion = loss, ochre = to pay.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --font-display: "Instrument Serif", "Noto Kufi Arabic", Georgia, serif;
+    --font-sans: "Schibsted Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --background: 42 33% 93%;
+    --paper: 44 45% 97%;
+    --foreground: 30 12% 10%;
+    --card: 44 45% 97%;
+    --card-foreground: 30 12% 10%;
+    --popover: 44 45% 98%;
+    --popover-foreground: 30 12% 10%;
+    --primary: 150 62% 19%;
+    --primary-foreground: 44 45% 97%;
+    --secondary: 40 24% 87%;
+    --secondary-foreground: 30 12% 14%;
+    --muted: 40 22% 88%;
+    --muted-foreground: 30 8% 40%;
+    --accent: 146 30% 86%;
+    --accent-foreground: 150 62% 16%;
+    --destructive: 8 72% 44%;
+    --destructive-foreground: 44 45% 97%;
+    --gain: 150 62% 24%;
+    --gain-soft: 146 38% 88%;
+    --loss: 8 72% 45%;
+    --loss-soft: 10 70% 92%;
+    --due: 38 82% 40%;
+    --due-soft: 42 85% 88%;
+    --rule: 30 14% 78%;
+    --border: 35 18% 80%;
+    --input: 35 18% 76%;
+    --ring: 150 62% 24%;
+    --radius: 0.625rem;
+    --grain-opacity: 0.35;
+  }
+
+  .dark {
+    --background: 150 14% 6%;
+    --paper: 150 12% 9%;
+    --foreground: 42 30% 90%;
+    --card: 150 12% 9%;
+    --card-foreground: 42 30% 90%;
+    --popover: 150 12% 10%;
+    --popover-foreground: 42 30% 90%;
+    --primary: 146 48% 56%;
+    --primary-foreground: 150 30% 7%;
+    --secondary: 150 8% 15%;
+    --secondary-foreground: 42 30% 90%;
+    --muted: 150 8% 14%;
+    --muted-foreground: 40 10% 62%;
+    --accent: 150 22% 17%;
+    --accent-foreground: 146 48% 70%;
+    --destructive: 8 78% 60%;
+    --destructive-foreground: 150 30% 7%;
+    --gain: 146 50% 58%;
+    --gain-soft: 150 30% 15%;
+    --loss: 8 85% 66%;
+    --loss-soft: 8 40% 16%;
+    --due: 40 85% 60%;
+    --due-soft: 40 40% 15%;
+    --rule: 150 6% 22%;
+    --border: 150 7% 19%;
+    --input: 150 7% 24%;
+    --ring: 146 48% 56%;
+    --grain-opacity: 0.18;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+    min-height: 100dvh;
+  }
+
+  /* Arabic: Kufi for display, Plex Sans Arabic for text. Numbers stay Latin (fr-MA / ar-MA). */
+  html[lang="ar"] {
+    --font-display: "Noto Kufi Arabic", "Instrument Serif", serif;
+    --font-sans: "IBM Plex Sans Arabic", "Schibsted Grotesk", system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.22);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Paper grain over the whole app: subtle SVG noise, no image request. */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .dark .grain::before {
+    mix-blend-mode: screen;
+  }
+
+  /* Ruled ledger lines (used behind tables and the profit ladder). */
+  .ledger-rules {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(2.75rem - 1px),
+      hsl(var(--rule) / 0.55) calc(2.75rem - 1px),
+      hsl(var(--rule) / 0.55) 2.75rem
+    );
+  }
+
+  /* The red margin line of an account book. */
+  .ledger-margin {
+    position: relative;
+  }
+  .ledger-margin::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 2.25rem;
+    width: 1px;
+    background: hsl(var(--loss) / 0.35);
+  }
+
+  .figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .display-figure {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  .eyebrow {
+    @apply text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+  }
+  html[lang="ar"] .eyebrow {
+    @apply text-xs normal-case tracking-normal;
+  }
+
+  .paper-card {
+    @apply relative rounded-lg border bg-paper;
+    box-shadow:
+      0 1px 0 hsl(var(--foreground) / 0.04),
+      0 12px 28px -18px hsl(30 30% 20% / 0.28);
+  }
+  .dark .paper-card {
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.03) inset,
+      0 18px 40px -24px hsl(0 0% 0% / 0.8);
+  }
+
+  /* Double underline under totals, like a closed account. */
+  .double-rule {
+    border-bottom: 3px double hsl(var(--foreground) / 0.7);
+  }
+
+  .stamp {
+    @apply inline-flex items-center gap-1 rounded-sm border-2 px-1.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-widest;
+    transform: rotate(-3deg);
+  }
+  html[lang="ar"] .stamp {
+    @apply text-xs normal-case tracking-normal;
+  }
+
+  .discreet .money-value {
+    filter: blur(7px);
+    transition: filter 0.2s;
+  }
+  .discreet .money-value:hover {
+    filter: none;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--rule)) transparent;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .grain::before {
+    display: none;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .paper-card {
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

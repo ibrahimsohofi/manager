@@ -1,0 +1,102 @@
+./products_manager/backend/integration/saleBatch.js:22:const unitCostOf = (purchasePrice) => {
+./products_manager/backend/integration/saleBatch.js:142:                    p.purchase_price, c.name AS category_name
+./products_manager/backend/integration/saleBatch.js:209:                unit_cost: unitCostOf(product.purchase_price)
+./products_manager/backend/integration/saleBatch.js:264:    unitCostOf
+./products_manager/backend/server.js:122:        purchase_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+./products_manager/backend/server.js:247:const unitCostOf = (purchasePrice) => {
+./products_manager/backend/server.js:258:        unit_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+./products_manager/backend/server.js:269:    // "opening" purchase (purchase_price x remaining_stock) dated on the day the
+./products_manager/backend/server.js:274:          INSERT INTO stock_purchases (product_id, product_name, quantity, unit_cost, total_cost, source, purchased_at)
+./products_manager/backend/server.js:275:          SELECT id, name, remaining_stock, purchase_price, ROUND(purchase_price * remaining_stock, 2), 'opening', COALESCE(created_at, NOW())
+./products_manager/backend/server.js:284:const recordStockPurchase = async ({productId, productName, quantity, unitCost, source}) => {
+./products_manager/backend/server.js:287:    const cost = roundMoney(unitCost);
+./products_manager/backend/server.js:290:            `INSERT INTO stock_purchases (product_id, product_name, quantity, unit_cost, total_cost, source)
+./products_manager/backend/server.js:416:            product.last_purchase_price = parseFloat(lastPurchaseChange.old_price);
+./products_manager/backend/server.js:449:         ORDER BY ph.changed_at DESC LIMIT 1) as last_purchase_price,
+./products_manager/backend/server.js:572:            purchase_price,
+./products_manager/backend/server.js:580:      INSERT INTO products (name, description, category_id, purchase_price, selling_price, remaining_stock, min_stock_level, image_url)
+./products_manager/backend/server.js:586:            purchase_price,
+./products_manager/backend/server.js:600:            unitCost: purchase_price,
+./products_manager/backend/server.js:618:            purchase_price,
+./products_manager/backend/server.js:628:            "SELECT purchase_price, selling_price, remaining_stock FROM products WHERE id = ?",
+./products_manager/backend/server.js:633:            const oldPurchasePrice = parseFloat(currentProduct[0].purchase_price);
+./products_manager/backend/server.js:635:            const newPurchasePrice = parseFloat(purchase_price);
+./products_manager/backend/server.js:657:        const updateQuery = `UPDATE products SET name = ?, description = ?, category_id = ?, purchase_price = ?, selling_price = ?, remaining_stock = ?, min_stock_level = ?, image_url = ? WHERE id = ?`;
+./products_manager/backend/server.js:663:            purchase_price,
+./products_manager/backend/server.js:685:                    unitCost: purchase_price,
+./products_manager/backend/server.js:772:                purchase_price_changes: purchaseChanges.length,
+./products_manager/backend/server.js:840:        const [stockCostResult] = await dbQuery.execute("SELECT COALESCE(SUM(purchase_price * remaining_stock), 0) AS stock_cost_value FROM products WHERE remaining_stock > 0");
+./products_manager/backend/server.js:1005:                sp.id, sp.product_id, sp.product_name, sp.quantity, sp.unit_cost,
+./products_manager/backend/server.js:1053:                unit_cost: roundMoney(row.unit_cost),
+./products_manager/backend/server.js:1167:            purchase_price: product.purchase_price || product.cost,
+./products_manager/backend/server.js:1394:        id, name, remaining_stock, selling_price, purchase_price, category_id,
+./products_manager/backend/server.js:1457:        unit_cost: unitCostOf(product.purchase_price)
+./products_manager/src/App.tsx:480:        [t('export.fields.purchasePrice')]: product.purchase_price,
+./products_manager/src/App.tsx:866:          {/* Live: purchase_price x remaining_stock (follows the stock) */}
+./products_manager/src/components/PriceHistory.tsx:146:                {summary.purchase_price_changes}
+./products_manager/src/components/ProductForm.tsx:41:    purchase_price: z.number().min(0.01, t("validation.purchasePriceMin")),
+./products_manager/src/components/ProductForm.tsx:77:      purchase_price: 0,
+./products_manager/src/components/ProductForm.tsx:94:          purchase_price: Number(editingProduct.purchase_price) || 0,
+./products_manager/src/components/ProductForm.tsx:107:          purchase_price: 0,
+./products_manager/src/components/ProductForm.tsx:121:        purchase_price: 0,
+./products_manager/src/components/ProductForm.tsx:389:                name="purchase_price"
+./products_manager/src/components/ProductHoverModal.tsx:138:              <span>{t('products.purchasePrice')}: {showPurchasePrice ? `${product.purchase_price} ${t('currency')}` : '••••'}</span>
+./products_manager/src/components/ProductTable.tsx:222:                      <span className="font-medium">{showPurchasePrice ? `${product.purchase_price} ${t("currency")}` : "••••"}</span>
+./products_manager/src/components/ProductTable.tsx:223:                      {showPurchasePrice && product.last_purchase_price && product.last_purchase_price !== product.purchase_price && (
+./products_manager/src/components/ProductTable.tsx:225:                          <span className="text-xs text-gray-400 line-through pl-1">{product.last_purchase_price}</span>
+./products_manager/src/components/ProductTable.tsx:226:                          {product.purchase_price > product.last_purchase_price ? (
+./products_manager/src/components/SpendingMonthDetail.tsx:252:                    {t("spending.detail.unitCost")}
+./products_manager/src/components/SpendingMonthDetail.tsx:352:                          {formatMoney(entry.unit_cost)}
+./products_manager/src/components/ViewProduct.tsx:70:  purchase_price: number;
+./products_manager/src/components/ViewProduct.tsx:449:                  {product.purchase_price && (
+./products_manager/src/components/ViewProduct.tsx:451:                      Cost: {product.purchase_price}
+./products_manager/src/components/ViewProduct.tsx:638:  const profitMargin = product.purchase_price > 0
+./products_manager/src/components/ViewProduct.tsx:639:    ? (((product.selling_price - product.purchase_price) / product.purchase_price) * 100).toFixed(1)
+./products_manager/src/components/ViewProduct.tsx:994:                        <p className="text-2xl font-bold">{product.purchase_price} {t("currency")}</p>
+./products_manager/src/types/index.ts:17:  purchase_price: number;
+./products_manager/src/types/index.ts:28:  last_purchase_price?: number;
+./products_manager/src/types/index.ts:51:  /** SUM(purchase_price * remaining_stock): live, follows the stock */
+./products_manager/src/types/index.ts:104:  unit_cost: number;
+./products_manager/src/types/index.ts:140:    purchase_price_changes: number;
+./sales_manager/server.js:119:        purchase_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+./sales_manager/server.js:373:            purchase_price: product.purchase_price || product.cost,
+./sales_manager/server.js:535:const unitCostOf = (purchasePrice) => {
+./sales_manager/server.js:558:            "SELECT id, name, remaining_stock, selling_price, purchase_price, category_id FROM products WHERE id = ?",
+./sales_manager/server.js:610:                unit_cost: unitCostOf(product.purchase_price)
+./sales_manager/server/config/database.js:69:    // Finances (FINANCE_PLAN.md §5): expense tables, category seed, sales.unit_cost. Logs, never throws.
+./sales_manager/server/config/database.js:219:        unit_cost DECIMAL(10,2) NOT NULL CHECK (unit_cost >= 0),
+./sales_manager/server/config/financeSchema.js:142:  { name: 'unit_cost', definition: 'DECIMAL(10,2) NULL' },
+./sales_manager/server/config/financeSchema.js:143:  { name: 'cost_source', definition: "ENUM('sale', 'backfill') NULL" },
+./sales_manager/server/config/financeSchema.js:197: * Creates the finance tables, seeds the expense categories, adds `sales.unit_cost` / `cost_source`
+./sales_manager/server/controllers/productController.js:362:        purchase_price_changes: purchaseChanges.length,
+./sales_manager/server/controllers/salesController.js:5:import { costFromIntegration, noCost } from '../utils/saleCost.js';
+./sales_manager/server/controllers/salesController.js:167:    const { unit_cost: _unitCost, cost_source: _costSource, ...newSale } = await Sale.create({ ...saleData, ...cost });
+./sales_manager/server/controllers/salesController.js:436:    // and older products APIs (no `unit_cost` in the reply) keep a NULL cost.
+./sales_manager/server/models/Sale.js:2:import { parseUnitCost } from '../utils/saleCost.js';
+./sales_manager/server/models/Sale.js:4:// sales.unit_cost / cost_source are added on start by ensureFinanceTables(), which logs and never
+./sales_manager/server/models/Sale.js:97:      unit_cost = null,
+./sales_manager/server/models/Sale.js:98:      cost_source = null
+./sales_manager/server/models/Sale.js:127:    const unitCost = parseUnitCost(unit_cost);
+./sales_manager/server/models/Sale.js:129:    if (unitCost !== null && !costColumnsMissing) {
+./sales_manager/server/models/Sale.js:134:        ${baseColumns}, unit_cost, cost_source
+./sales_manager/server/models/Sale.js:138:          [...baseParams, unitCost, cost_source === 'backfill' ? 'backfill' : 'sale']
+./sales_manager/server/models/Sale.js:143:        console.error('⚠️ sales.unit_cost / cost_source missing: sales are saved without their cost.', error.message);
+./sales_manager/server/models/Sale.js:160:    // unit_cost / cost_source are left untouched on purpose: the product of a line can't be changed
+./sales_manager/server/utils/saleCost.js:2:// The products API returns the purchase price of the day as `sale.unit_cost` (POST /api/integration/sale).
+./sales_manager/server/utils/saleCost.js:5:const NO_COST = Object.freeze({ unit_cost: null, cost_source: null });
+./sales_manager/server/utils/saleCost.js:19: * `{ unit_cost, cost_source }` for Sale.create, from the products API response.
+./sales_manager/server/utils/saleCost.js:20: * An older products API (no `unit_cost` in its reply) gives a NULL cost: the sale is saved normally
+./sales_manager/server/utils/saleCost.js:24:  const unitCost = parseUnitCost(integrationData?.sale?.unit_cost);
+./sales_manager/server/utils/saleCost.js:25:  return unitCost === null ? { ...NO_COST } : { unit_cost: unitCost, cost_source: 'sale' };
+./sales_manager/src/components/OutOfStock.jsx:95:                    {Number.parseFloat(product.purchase_price || 0).toFixed(2)}
+./sales_manager/src/components/PriceHistory.jsx:148:                {summary.purchase_price_changes}
+./sales_manager/src/components/ProductForm.jsx:11:    purchase_price: "",
+./sales_manager/src/components/ProductForm.jsx:27:        purchase_price: product.purchase_price || "",
+./sales_manager/src/components/ProductForm.jsx:40:  const profitMargin = formData.purchase_price && formData.selling_price
+./sales_manager/src/components/ProductForm.jsx:41:    ? (((Number.parseFloat(formData.selling_price) - Number.parseFloat(formData.purchase_price)) / Number.parseFloat(formData.purchase_price)) * 100).toFixed(2)
+./sales_manager/src/components/ProductForm.jsx:44:  const profitAmount = formData.purchase_price && formData.selling_price
+./sales_manager/src/components/ProductForm.jsx:45:    ? (Number.parseFloat(formData.selling_price) - Number.parseFloat(formData.purchase_price)).toFixed(2)
+./sales_manager/src/components/ProductForm.jsx:66:      purchase_price: "",
+./sales_manager/src/components/ProductForm.jsx:173:                name="purchase_price"
+./sales_manager/src/components/ProductForm.jsx:174:                value={formData.purchase_price}
+./sales_manager/src/components/ProductForm.jsx:203:          {formData.purchase_price && formData.selling_price && (

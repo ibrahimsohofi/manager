@@ -1,0 +1,33 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- House Structure -->
+  <g transform="translate(2, 3)">
+    <!-- Outer house frame -->
+    <path d="M3 13 L14 2 L25 13 L25 26 L3 26 Z"
+          stroke="#FF6B35"
+          stroke-width="2"
+          fill="none"
+          stroke-linejoin="round"
+          stroke-linecap="round"/>
+
+    <!-- Inner house frame -->
+    <path d="M6 15 L14 7 L22 15 L22 23 L6 23 Z"
+          stroke="#FF6B35"
+          stroke-width="1.5"
+          fill="none"
+          stroke-linejoin="round"/>
+
+    <!-- Tools inside house -->
+    <!-- Hammer -->
+    <g transform="translate(9, 12)">
+      <rect x="0" y="1" width="4" height="2" fill="#4A5568" rx="0.5"/>
+      <rect x="1.5" y="3" width="1" height="6" fill="#4A5568" rx="0.3"/>
+    </g>
+
+    <!-- Wrench -->
+    <g transform="translate(15, 14)">
+      <circle cx="1.5" cy="1.5" r="1.2" stroke="#4A5568" stroke-width="1" fill="none"/>
+      <rect x="1" y="2.5" width="1" height="4" fill="#4A5568" rx="0.3"/>
+      <rect x="0" y="4" width="3" height="0.8" fill="#4A5568" rx="0.2"/>
+    </g>
+  </g>
+</svg>

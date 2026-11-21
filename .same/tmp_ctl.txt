@@ -1,0 +1,20 @@
+5: import { costFromIntegration, noCost } from '../utils/saleCost.js';
+10: export const getAllSales = async (req, res) => {
+39: export const getSaleById = async (req, res) => {
+56: export const createSale = async (req, res) => {
+121:     let cost = noCost();
+128:         const integrationResponse = await fetch(`${PRODUCTS_API_URL}/api/integration/sale`, {
+167:     const { unit_cost: _unitCost, cost_source: _costSource, ...newSale } = await Sale.create({ ...saleData, ...cost });
+213: const withClientNumber = async (row, created) => {
+237: async function resolveCheckoutCustomer(requestedId, label = '', auto = false) {
+273: export const checkoutSale = async (req, res) => {
+437:     let cost = noCost();
+441:         const integrationResponse = await fetch(`${PRODUCTS_API_URL}/api/integration/sale`, {
+457:         cost = costFromIntegration(integrationData);
+461:       const created = await Sale.create({
+543: export const updateSale = async (req, res) => {
+588:     const updatedSale = await Sale.update(id, saleData);
+597: export const deleteSale = async (req, res) => {
+615: export const getSalesStats = async (req, res) => {
+649: export const getCategories = async (req, res) => {
+661: export const getAggregatedSales = async (req, res) => {

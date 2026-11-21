@@ -1,0 +1,23 @@
+{
+  "name": "finance_manager-server",
+  "version": "1.0.0",
+  "description": "Finance API for SOHOFI BRICO: expenses, categories and real monthly / yearly profit",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "dev:mock": "node --watch mock/server.js",
+    "start:mock": "node mock/server.js",
+    "setup-env": "node scripts/setup-env.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.4"
+  },
+  "author": "ibrahimsohofi",
+  "license": "MIT"
+}
