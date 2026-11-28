@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#121211">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Scanner">
+  <meta name="format-detection" content="telephone=no">
+  <title>Scanner caisse · SOHOFI BRICO</title>
+  <link rel="stylesheet" href="phone.css">
+</head>
+<body>
+  <!-- Full-screen colour flash after each result (green / red / amber) -->
+  <div id="flash" class="flash" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <!-- Connection status: the first thing the cashier looks at -->
+    <header class="topbar">
+      <div class="status" id="status" data-state="connecting" role="status" aria-live="polite">
+        <span class="status__dot" aria-hidden="true"></span>
+        <span class="status__text">
+          <strong class="status__title" id="statusTitle">Connexion…</strong>
+          <span class="status__detail" id="statusDetail">Recherche de la caisse</span>
+        </span>
+      </div>
+      <button type="button" class="device" id="deviceBtn" aria-label="Nom de ce téléphone">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
+        <span id="deviceName">Téléphone</span>
+      </button>
+    </header>
+
+    <div class="banner" id="banner" hidden>
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="bannerText">Reconnexion à la caisse…</span>
+    </div>
+
+    <!-- Camera viewfinder -->
+    <main class="stage">
+      <section class="viewfinder" id="viewfinder" data-camera="idle" aria-label="Caméra">
+        <div id="reader" class="reader"></div>
+
+        <div class="frame" aria-hidden="true">
+          <i class="frame__corner frame__corner--tl"></i>
+          <i class="frame__corner frame__corner--tr"></i>
+          <i class="frame__corner frame__corner--bl"></i>
+          <i class="frame__corner frame__corner--br"></i>
+          <i class="frame__line"></i>
+        </div>
+
+        <div class="sending" id="sending" hidden>
+          <span class="spinner" aria-hidden="true"></span>
+          <span>Envoi à la caisse…</span>
+        </div>
+
+        <div class="idle" id="idle">
+          <div class="idle__glyph" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <p class="idle__text" id="idleText">Pointez la caméra vers le code QR ou le code-barres du produit.</p>
+          <button type="button" class="btn btn--primary btn--xl" id="startBtn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.4-2h5l1.4 2h1.6A2.5 2.5 0 0 1 20 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            <span>Démarrer la caméra</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Camera controls -->
+      <nav class="controls" aria-label="Commandes">
+        <button type="button" class="ctrl" id="switchBtn" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.4-2h5l1.4 2h1.6A2.5 2.5 0 0 1 20 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z"/><path d="M9 12.5a3 3 0 0 1 5.2-2M15 13.5a3 3 0 0 1-5.2 2M14.5 8.5v2h-2M9.5 17.5v-2h2"/></svg>
+          <span>Caméra</span>
+        </button>
+        <button type="button" class="ctrl" id="torchBtn" disabled aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2.5h8v4l-2 3v12h-4v-12l-2-3z"/><path d="M12 13v2"/></svg>
+          <span>Lampe</span>
+        </button>
+        <button type="button" class="ctrl" id="manualBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h1M9.5 10h1M13 10h1M16.5 10h1M7 14h10"/></svg>
+          <span>Saisie</span>
+        </button>
+        <button type="button" class="ctrl" id="stopBtn" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          <span>Arrêter</span>
+        </button>
+      </nav>
+
+      <!-- Last result + cart summary -->
+      <section class="result" id="result" data-kind="none" aria-live="polite">
+        <div class="result__icon" aria-hidden="true">
+          <svg class="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <svg class="i-err" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>
+          <svg class="i-warn" viewBox="0 0 24 24"><path d="M12 7.5v6M12 16.8v.2"/></svg>
+          <svg class="i-none" viewBox="0 0 24 24"><path d="M4 7V5h3M17 5h3v2M20 17v2h-3M7 19H4v-2M8 9v6M11 9v6M14 9v6M16.5 9v6"/></svg>
+        </div>
+        <div class="result__body">
+          <strong class="result__title" id="resultTitle">Prêt à scanner</strong>
+          <span class="result__detail" id="resultDetail">Les produits scannés arrivent dans le panier de la caisse.</span>
+          <code class="result__code" id="resultCode" hidden></code>
+        </div>
+      </section>
+
+      <section class="cart" id="cart" hidden aria-label="Panier de la caisse">
+        <div class="cart__cell"><span class="cart__value" id="cartLines">0</span><span class="cart__label">lignes</span></div>
+        <div class="cart__cell"><span class="cart__value" id="cartUnits">0</span><span class="cart__label">articles</span></div>
+        <div class="cart__cell cart__cell--total"><span class="cart__value" id="cartAmount">0,00</span><span class="cart__label">MAD</span></div>
+      </section>
+
+      <section class="history" aria-label="Derniers scans">
+        <h2 class="history__title">Derniers scans</h2>
+        <ol class="history__list" id="history"></ol>
+        <p class="history__empty" id="historyEmpty">Aucun scan pour l'instant.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- No / invalid / revoked pairing code: blocks the scanner -->
+  <section class="screen" id="pairScreen" hidden role="alertdialog" aria-labelledby="pairTitle" aria-describedby="pairText">
+    <div class="screen__card">
+      <div class="screen__glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg>
+      </div>
+      <h1 class="screen__title" id="pairTitle">Téléphone non associé</h1>
+      <p class="screen__text" id="pairText">Sur l'ordinateur, ouvrez Vente QR, cliquez sur « Téléphone », puis scannez le code QR affiché avec l'appareil photo de ce téléphone.</p>
+      <ol class="screen__steps">
+        <li>Même Wi-Fi que l'ordinateur de la caisse</li>
+        <li>Vente QR → bouton « Téléphone »</li>
+        <li>Scannez le QR avec l'appareil photo</li>
+      </ol>
+      <button type="button" class="btn btn--ghost" id="pairRetryBtn">Réessayer</button>
+    </div>
+  </section>
+
+  <!-- Manual code entry (fallback when the label is damaged) -->
+  <dialog class="sheet" id="manualDialog" aria-labelledby="manualTitle">
+    <form method="dialog" class="sheet__form" id="manualForm" novalidate>
+      <h2 class="sheet__title" id="manualTitle">Saisir un code</h2>
+      <p class="sheet__hint">ID du produit ou code-barres (EAN-13).</p>
+      <input class="field" id="manualInput" name="code" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="200" placeholder="ex. 125 ou 6111234567890" enterkeyhint="send">
+      <div class="sheet__actions">
+        <button type="button" class="btn btn--ghost" data-close>Annuler</button>
+        <button type="submit" class="btn btn--primary" value="send">Envoyer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Device name shown on the laptop -->
+  <dialog class="sheet" id="nameDialog" aria-labelledby="nameTitle">
+    <form method="dialog" class="sheet__form" id="nameForm" novalidate>
+      <h2 class="sheet__title" id="nameTitle">Nom de ce téléphone</h2>
+      <p class="sheet__hint">Affiché sur l'écran de la caisse.</p>
+      <input class="field" id="nameInput" name="name" type="text" autocomplete="off" maxlength="40" placeholder="ex. Téléphone Jamal" enterkeyhint="done">
+      <div class="sheet__actions">
+        <button type="button" class="btn btn--ghost" data-close>Annuler</button>
+        <button type="submit" class="btn btn--primary" value="save">Enregistrer</button>
+      </div>
+      <button type="button" class="sheet__link" id="forgetBtn">Dissocier ce téléphone</button>
+    </form>
+  </dialog>
+
+  <noscript><p class="noscript">Activez JavaScript pour utiliser le scanner.</p></noscript>
+
+  <script src="html5-qrcode.min.js" defer></script>
+  <script src="phone.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Ventes — SOHOFI BRICO brand theme, shared with finance_manager.
+   Navy #07294D = primary + sidebar, orange #F76B03 = brand accent / call to action.
+   Cool navy-tinted neutrals. Green = paid / profit, crimson = loss, burnt orange = due.
+   Tailwind `gray-*` and `blue-*` are remapped in tailwind.config.js so every page follows.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --font-display: "Instrument Serif", "Noto Kufi Arabic", Georgia, serif;
+    --font-sans: "Schibsted Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    /* Brand (logo) */
+    --navy: 211 83% 16%; /* #07294D */
+    --navy-deep: 212 86% 14%; /* #052243 */
+    --brand: 26 98% 49%; /* #F76B03 */
+    --brand-foreground: 0 0% 100%;
+    --brand-soft: 28 100% 94%;
+
+    --background: 216 24% 96%;
+    --paper: 0 0% 100%;
+    --foreground: 213 50% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 213 50% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 50% 11%;
+    --primary: 211 83% 16%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 26% 92%;
+    --secondary-foreground: 213 50% 14%;
+    --muted: 214 24% 93%;
+    --muted-foreground: 214 14% 40%;
+    --accent: 211 52% 93%;
+    --accent-foreground: 211 83% 18%;
+    --destructive: 354 72% 44%;
+    --destructive-foreground: 0 0% 100%;
+    --gain: 156 66% 26%;
+    --gain-soft: 152 46% 90%;
+    --loss: 354 72% 45%;
+    --loss-soft: 354 82% 95%;
+    --due: 22 92% 40%;
+    --due-soft: 28 100% 93%;
+    --rule: 214 20% 84%;
+    --border: 214 22% 87%;
+    --input: 214 20% 81%;
+    --ring: 26 98% 49%;
+    --radius: 0.625rem;
+    --grain-opacity: 0.22;
+
+    --chart-1: 211 83% 22%;
+    --chart-2: 26 98% 49%;
+    --chart-3: 156 66% 30%;
+    --chart-4: 211 45% 55%;
+    --chart-5: 38 92% 50%;
+
+    /* Tailwind `blue-*` = the "primary" ramp: navy in light mode … */
+    --blue-50: 214 65% 96%;
+    --blue-100: 213 62% 92%;
+    --blue-200: 212 58% 84%;
+    --blue-300: 211 52% 68%;
+    --blue-400: 211 52% 48%;
+    --blue-500: 211 68% 32%;
+    --blue-600: 211 83% 21%;
+    --blue-700: 211 83% 16%;
+    --blue-800: 212 86% 13%;
+    --blue-900: 213 82% 10%;
+    --blue-950: 213 85% 7%;
+  }
+
+  .dark {
+    --navy: 212 80% 11%;
+    --navy-deep: 213 85% 8%;
+    --brand: 26 98% 53%;
+    --brand-foreground: 0 0% 100%;
+    --brand-soft: 24 60% 14%;
+
+    --background: 213 50% 7%;
+    --paper: 213 42% 10%;
+    --foreground: 210 30% 92%;
+    --card: 213 42% 10%;
+    --card-foreground: 210 30% 92%;
+    --popover: 213 42% 11%;
+    --popover-foreground: 210 30% 92%;
+    --primary: 26 98% 55%;
+    --primary-foreground: 213 60% 8%;
+    --secondary: 213 30% 16%;
+    --secondary-foreground: 210 30% 92%;
+    --muted: 213 30% 15%;
+    --muted-foreground: 213 16% 64%;
+    --accent: 213 40% 18%;
+    --accent-foreground: 210 60% 82%;
+    --destructive: 354 80% 62%;
+    --destructive-foreground: 213 60% 8%;
+    --gain: 155 55% 55%;
+    --gain-soft: 158 40% 14%;
+    --loss: 354 85% 66%;
+    --loss-soft: 354 40% 16%;
+    --due: 26 98% 60%;
+    --due-soft: 24 60% 14%;
+    --rule: 213 25% 20%;
+    --border: 213 28% 18%;
+    --input: 213 25% 24%;
+    --ring: 26 98% 55%;
+    --grain-opacity: 0.14;
+
+    --chart-1: 26 98% 55%;
+    --chart-2: 211 70% 62%;
+    --chart-3: 155 55% 55%;
+    --chart-4: 38 92% 60%;
+    --chart-5: 354 85% 66%;
+
+    /* … and brand orange in dark mode (like finance_manager's dark primary). */
+    --blue-50: 30 100% 96%;
+    --blue-100: 30 100% 90%;
+    --blue-200: 28 98% 80%;
+    --blue-300: 27 98% 69%;
+    --blue-400: 26 98% 61%;
+    --blue-500: 26 98% 54%;
+    --blue-600: 26 98% 49%;
+    --blue-700: 24 95% 42%;
+    --blue-800: 22 85% 32%;
+    --blue-900: 20 72% 22%;
+    --blue-950: 18 70% 13%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html[dir="rtl"] {
+    --tab-from: 6px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+    min-height: 100dvh;
+  }
+
+  /* Arabic: Kufi for display, Plex Sans Arabic for text. */
+  html[lang="ar"] {
+    --font-display: "Noto Kufi Arabic", "Instrument Serif", serif;
+    --font-sans: "IBM Plex Sans Arabic", "Schibsted Grotesk", system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: hsl(var(--brand) / 0.22);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Paper grain over the whole app: subtle SVG noise, no image request. */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.03 0 0 0 0 0.16 0 0 0 0 0.3 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .dark .grain::before {
+    mix-blend-mode: screen;
+  }
+
+  /* Brand navy panel (sidebar, mobile sheet head): fine diagonal hatch + soft light, orange glow. */
+  .cloth {
+    background-color: hsl(var(--navy));
+    background-image:
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 7px),
+      radial-gradient(120% 70% at 15% 0%, rgba(255, 255, 255, 0.09), transparent 60%),
+      radial-gradient(80% 50% at 100% 100%, hsl(var(--brand) / 0.12), transparent 70%),
+      linear-gradient(to bottom, transparent 40%, hsl(var(--navy-deep) / 0.85));
+  }
+
+  .figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow {
+    @apply text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+  }
+  html[lang="ar"] .eyebrow {
+    @apply text-xs normal-case tracking-normal;
+  }
+
+  .paper-card {
+    @apply relative rounded-lg border bg-paper;
+    box-shadow:
+      0 1px 0 hsl(var(--foreground) / 0.04),
+      0 12px 28px -18px hsl(213 60% 15% / 0.24);
+  }
+  .dark .paper-card {
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.03) inset,
+      0 18px 40px -24px hsl(0 0% 0% / 0.8);
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--rule)) transparent;
+  }
+  .scrollbar-cloth {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .grain::before {
+    display: none;
+  }
+  .print-reset {
+    padding: 0 !important;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-tab-in,
+  .animate-sheet-up,
+  .animate-fade-in {
+    animation: none;
+  }
+}
+
+/* ==================== QR scanner ==================== */
+
+/* html5-qrcode injects a <video> (and sometimes a <canvas>) in .qr-reader */
+.qr-reader {
+  overflow: hidden;
+}
+
+.qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+
+.qr-reader canvas {
+  display: none;
+}
+
+/* Hide html5-qrcode's own shaded region / borders: we draw our own viewfinder */
+.qr-reader #qr-shaded-region,
+.qr-reader [id$="__dashboard"],
+.qr-reader [id$="__header_message"] {
+  display: none !important;
+}
+
+@keyframes qr-scan-line {
+  0% {
+    top: 6%;
+    opacity: 0.4;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    top: 92%;
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    top: 6%;
+    opacity: 0.4;
+  }
+}
+
+.qr-scan-line {
+  top: 6%;
+  animation: qr-scan-line 2.4s ease-in-out infinite;
+}
+
+/* Row highlight when a product is (re)scanned into the cart */
+@keyframes qr-row-flash {
+  from {
+    background-color: rgba(16, 185, 129, 0.18);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.qr-row-flash {
+  animation: qr-row-flash 1.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-scan-line,
+  .qr-row-flash {
+    animation: none;
+  }
+}
+
+/* ==================== Carnet (personal ledger) ==================== */
+/* A pocket notebook: leather cover, cream ruled paper, red margin line. */
+
+.carnet {
+  --carnet-paper: #fbf8f1;
+  --carnet-paper-edge: #ece3d0;
+  --carnet-rule: rgba(87, 83, 78, 0.11);
+  --carnet-margin: rgba(225, 29, 72, 0.42);
+  --carnet-ink: #1c1917;
+  --carnet-cover: #1d3b34;
+  --carnet-cover-deep: #10241f;
+  --carnet-foil: #ead9a8;
+  --carnet-line: 2rem;
+  --carnet-margin-x: 4rem;
+}
+
+.dark .carnet {
+  --carnet-paper: #1f1d1a;
+  --carnet-paper-edge: #34302a;
+  --carnet-rule: rgba(231, 229, 228, 0.06);
+  --carnet-margin: rgba(251, 113, 133, 0.35);
+  --carnet-ink: #f5f5f4;
+  --carnet-cover: #15302a;
+  --carnet-cover-deep: #0a1714;
+}
+
+.carnet-display {
+  font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.012em;
+}
+
+[dir="rtl"] .carnet-display {
+  font-family: "Noto Naskh Arabic", "Fraunces", serif;
+  letter-spacing: 0;
+}
+
+/* Ruled paper */
+.carnet-paper {
+  position: relative;
+  background-color: var(--carnet-paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--carnet-line) - 1px),
+    var(--carnet-rule) calc(var(--carnet-line) - 1px),
+    var(--carnet-rule) var(--carnet-line)
+  );
+  border-color: var(--carnet-paper-edge);
+  color: var(--carnet-ink);
+}
+
+/* Margin line (follows the reading direction) */
+.carnet-margin::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: var(--carnet-margin-x);
+  border-inline-start: 1.5px solid var(--carnet-margin);
+  pointer-events: none;
+}
+
+/* Leather cover */
+.carnet-cover {
+  position: relative;
+  isolation: isolate;
+  color: var(--carnet-foil);
+  background-color: var(--carnet-cover);
+  background-image:
+    radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, 0.09), transparent 55%),
+    radial-gradient(90% 120% at 100% 100%, rgba(0, 0, 0, 0.38), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 24px 48px -24px rgba(16, 36, 31, 0.55),
+    0 2px 6px rgba(16, 36, 31, 0.25);
+}
+
+/* Stitching */
+.carnet-cover::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1.5px dashed rgba(234, 217, 168, 0.28);
+  border-radius: calc(1.75rem - 8px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Spine shadow */
+.carnet-cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 22px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.28), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+[dir="rtl"] .carnet-cover::after {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.28), transparent);
+}
+
+/* Elastic band */
+.carnet-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 2.5rem;
+  width: 14px;
+  background: linear-gradient(
+    90deg,
+    var(--carnet-cover-deep),
+    #29483f 45%,
+    var(--carnet-cover-deep)
+  );
+  box-shadow:
+    -2px 0 6px rgba(0, 0, 0, 0.25),
+    2px 0 6px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.carnet-foil {
+  color: var(--carnet-foil);
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.35),
+    0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Bookmark ribbon on person cards */
+.carnet-ribbon {
+  position: absolute;
+  top: -2px;
+  inset-inline-end: 1.25rem;
+  width: 12px;
+  height: 30px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 76%, 0 100%);
+  pointer-events: none;
+}
+
+@keyframes carnet-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* `backwards` (not `both`): once finished, the animation releases `transform`
+   so hover lifts (`hover:-translate-y-*`) still work on cards. */
+.carnet-rise {
+  animation: carnet-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+/* Highlight overlay when a person / entry was just saved */
+@keyframes carnet-flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.carnet-flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(251, 191, 36, 0.22);
+  box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.6);
+  pointer-events: none;
+  animation: carnet-flash 1.8s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carnet-rise,
+  .carnet-flash {
+    animation: none;
+  }
+
+  .carnet-flash {
+    opacity: 0;
+  }
+}

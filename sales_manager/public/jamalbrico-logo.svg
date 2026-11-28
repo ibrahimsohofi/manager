@@ -1,0 +1,61 @@
+<svg width="240" height="80" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- House Structure -->
+  <g transform="translate(8, 12)">
+    <!-- Outer house frame -->
+    <path d="M8 32 L24 16 L40 32 L40 48 L8 48 Z"
+          stroke="#FF6B35"
+          stroke-width="4"
+          fill="none"
+          stroke-linejoin="round"
+          stroke-linecap="round"/>
+
+    <!-- Inner house frame -->
+    <path d="M12 34 L24 22 L36 34 L36 44 L12 44 Z"
+          stroke="#FF6B35"
+          stroke-width="2.5"
+          fill="none"
+          stroke-linejoin="round"/>
+
+    <!-- Tools inside house -->
+    <!-- Hammer -->
+    <g transform="translate(16, 28)">
+      <!-- Hammer head -->
+      <rect x="0" y="2" width="8" height="4" fill="#4A5568" rx="1"/>
+      <!-- Hammer handle -->
+      <rect x="3" y="6" width="2" height="10" fill="#4A5568" rx="0.5"/>
+    </g>
+
+    <!-- Wrench -->
+    <g transform="translate(24, 30)">
+      <!-- Wrench head -->
+      <circle cx="3" cy="3" r="2.5" stroke="#4A5568" stroke-width="2" fill="none"/>
+      <!-- Wrench handle -->
+      <rect x="2" y="5" width="2" height="8" fill="#4A5568" rx="0.5"/>
+      <!-- Wrench adjustment -->
+      <rect x="0" y="8" width="6" height="1.5" fill="#4A5568" rx="0.3"/>
+    </g>
+  </g>
+
+  <!-- Text JAMAL (Orange) -->
+  <text x="60" y="35"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="28"
+        font-weight="bold"
+        fill="#FF6B35"
+        letter-spacing="1px">JAMAL</text>
+
+  <!-- Text BRICO (Grey) -->
+  <text x="60" y="58"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="28"
+        font-weight="bold"
+        fill="#4A5568"
+        letter-spacing="1px">BRICO</text>
+
+  <!-- Optional subtle shadow for depth -->
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#00000020"/>
+    </filter>
+  </defs>
+</svg>

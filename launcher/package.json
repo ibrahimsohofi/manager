@@ -1,0 +1,19 @@
+{
+  "name": "launcher",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SOHOFI BRICO launcher: one entry page to open the products, sales and finance apps",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "dev:solo": "LAUNCHER_START_APPS=0 vite --host 0.0.0.0",
+    "build": "vite build --outDir dist",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "biome lint src",
+    "format": "biome format --write src"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "vite": "^6.3.5"
+  }
+}

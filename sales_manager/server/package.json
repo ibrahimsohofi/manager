@@ -1,0 +1,25 @@
+{
+  "name": "sales_manager-server",
+  "version": "1.0.0",
+  "description": "Backend API for sales_manager sales management system",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:status": "node scripts/migrate.js --status",
+    "costs:backfill": "node scripts/backfillSaleCosts.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "html5-qrcode": "2.3.8",
+    "mysql2": "^3.11.4",
+    "selfsigned": "^5.5.0"
+  },
+  "author": "ibrahimsohofi",
+  "license": "MIT"
+}
